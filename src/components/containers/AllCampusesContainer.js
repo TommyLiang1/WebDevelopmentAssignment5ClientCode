@@ -9,7 +9,7 @@ import Header from './Header';
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchAllCampusesThunk } from "../../store/thunks";
+import { fetchAllCampusesThunk, deleteCampusThunk} from "../../store/thunks";
 import { AllCampusesView } from "../views";
 
 class AllCampusesContainer extends Component {
