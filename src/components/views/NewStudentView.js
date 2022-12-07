@@ -51,6 +51,11 @@ const NewStudentView = (props) => {
             </Typography>
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
+            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
             <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
             <input type="text" name="firstname" onChange ={(e) => handleChange(e)} required />
             <br/>
@@ -61,8 +66,18 @@ const NewStudentView = (props) => {
             <br/>
             <br/>
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} required />
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
+            <input type="text" name="email" onChange={(e) => handleChange(e)} required />
+            <br/>
+            <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>ImageURL: </label>
+            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
+            <input type="text" name="gpa" onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
