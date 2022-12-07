@@ -62,8 +62,9 @@ const NewCampusView = (props) => {
             <input type="text" name="campusdescription" onChange={(e) => handleChange(e)} required/>
             <br/>
             <br/>
-            
+
             <Button variant="contained" color="primary" type="submit">
+
               {console.log(props)}
               Submit
             </Button>
