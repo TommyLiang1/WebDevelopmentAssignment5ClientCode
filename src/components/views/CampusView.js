@@ -45,13 +45,15 @@ const CampusView = (props) => {
     deleteCampus(campus.id)
     setcampusdeletemsg("Deleted Campus");
   }
-  
-  // Render a single Campus view with list of its students
+
+  // Render a single Campus view with list of its students (temp will check for students)
   return (
     <div>
       <h1>{campus.name}</h1>
+      <img src={image} height={180} width={250}/>
       <p>{campus.address}</p>
       <p>{campus.description}</p>
+      {temp}
       {campus.students.map( student => {
         let name = student.firstname + " " + student.lastname;
         return (
@@ -62,6 +64,9 @@ const CampusView = (props) => {
           </div>
         );
       })}
+
+      <button onclick={() => campusDelete(campus.id)}>Delete Campus</button>
+      <p>{campusdeletemsg}</p>
     </div>
   );
 };
