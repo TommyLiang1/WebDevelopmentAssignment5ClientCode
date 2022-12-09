@@ -33,8 +33,48 @@ const useStyles = makeStyles( () => ({
 }));
 
 const NewCampusView = (props) => {
+
   const {handleChange, handleSubmit } = props;
+  const [CheckName, setCheckName] = useState("");
+  const [CheckAddress, setCheckAddress] = useState("");
+  const [CheckDescription, setCheckDescription] = useState("");
+
   const classes = useStyles();
+  //Function used to check form
+  //Checks if the fields are empty if they are then it will tell the user. If all the required fields are filled out, then the form will submit.
+  function CheckForm(event){
+    // preventDefault stops page from reloading
+    event.preventDefault();
+
+    //first checks if the form is not empty
+    if (event.target[0].value && event.target[1].value && event.target[2].value){
+      handleSubmit(e)
+    }
+    
+    //checks if campus name is empty
+    if (!event.target[0].value){
+      setCheckName("There is no campus name.")
+    }
+    else{
+      setCheckName("")
+    }
+
+    //checks if campus address is empty
+    if (!event.target[2].value){
+      setCheckAddress("There is no campus address.")
+    }
+    else{
+      setCheckAddress("")
+    }
+
+    //checks for a campus description
+    if (!event.target[3].value){
+      setCheckDescription("There is no campus description.")
+    }
+    else{
+      setCheckDescription("")
+    }
+  }
 
   // Render a New Student view with an input form
   return (
@@ -48,7 +88,7 @@ const NewCampusView = (props) => {
               Add a Campus
             </Typography>
           </div>
-          <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
+          <form style={{textAlign: 'center'}} onSubmit={(e) => CheckForm(e)}>
             <label style= {{color:'#11153e', fontWeight: 'bold'}}>Campus Name: </label>
             <input type="text" name="campusname" onChange ={(e) => handleChange(e)} required />
             <br/>
@@ -64,6 +104,11 @@ const NewCampusView = (props) => {
             <br/>
             <br/>
 
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>ImageURL: </label>
+            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)}/>
+            <br/>
+            <br/>
+
             <Button variant="contained" color="primary" type="submit">
 
               {console.log(props)}
@@ -73,6 +118,9 @@ const NewCampusView = (props) => {
             <br/>
           </form>
           </div>
+          <p>{CheckName}</p>
+          <p>{CheckAddress}</p>
+          <p>{CheckDescription}</p>
       </div>
     </div>    
   )
