@@ -33,7 +33,17 @@ const CampusView = (props) => {
     temp = "Students at this campus:";
   }
 
-  
+  //checks if there is a campus img, if none then displays squidward community college
+  if(!campus.imageUrl){
+    image = "https://onuniverse-assets.imgix.net/00643229-A4BC-4907-B4E1-881B190EAF30.jpg?w=750"
+  }
+  else{
+    image = campus.imageUrl;
+  }
+
+  const campusDelete=() => {
+    
+  }
   // Render a single Campus view with list of its students
   return (
     <div>
