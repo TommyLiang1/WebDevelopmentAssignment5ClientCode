@@ -42,8 +42,10 @@ const CampusView = (props) => {
   }
 
   const campusDelete=() => {
-    
+    deleteCampus(campus.id)
+    setcampusdeletemsg("Deleted Campus");
   }
+  
   // Render a single Campus view with list of its students
   return (
     <div>
