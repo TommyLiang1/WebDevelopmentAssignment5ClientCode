@@ -17,7 +17,7 @@ const useStyles = makeStyles( () => ({
 }));
 
 const AllStudentsView = (props) => {
-  const {students, deleteStudent, editStudent} = props;
+  const {students, deleteStudent} = props;
   const classes = useStyles();
   // If there is no student, display a message
   if (!students.length) {
