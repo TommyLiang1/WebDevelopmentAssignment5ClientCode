@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const AllCampusesView = (props) => {
+  // taken fron allstudentsview.js the const for props otherwise deletecampus would not be defined
   const {allCampuses, deleteCampus} = props;
   // If there is no campus, display a message.
   if (!allCampuses.length) {
