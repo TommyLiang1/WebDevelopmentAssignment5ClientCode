@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk } from '../../store/thunks';
+import { addStudentThunk, fetchCampusThunk } from '../../store/thunks';
 
 class NewStudentContainer extends Component {
   // Initialize state
@@ -43,9 +43,9 @@ class NewStudentContainer extends Component {
     let student = {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
-        campusId: this.state.campusId,
+        campusId: this.state.campusId == null? -1 : this.state.campusId,
         email: this.state.email,
-        imageUrl: this.state.imageUrl,
+        imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? "" : this.state.imageUrl,
         gpa: this.state.gpa
     };
     
@@ -98,7 +98,8 @@ class NewStudentContainer extends Component {
 // The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return({
-        addStudent: (student) => dispatch(addStudentThunk(student)),
+      addStudent: (student) => dispatch(addStudentThunk(student)),
+      fetchCampus: (campusId) => dispatch(fetchCampusThunk(campusId))
     })
 }
 

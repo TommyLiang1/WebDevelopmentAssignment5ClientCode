@@ -50,14 +50,14 @@ class EditStudentContainer extends Component {
       lastname: this.state.lastname === "" ? this.props.student.lastname : this.state.lastname,
       campusId: this.state.campusId == null ? this.props.student.campusId : this.state.campusId,
       email: this.state.email === "" ? this.props.student.email : this.state.email,
-      imageUrl: this.state.imageUrl === "" ? this.props.student.imageUrl : this.state.imageUrl,
+      imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? this.props.student.imageUrl : this.state.imageUrl,
       gpa: this.state.gpa == null ? this.props.student.gpa : this.state.gpa,
     };
 
     // Add edit student in back-end database
     let editStudent = await this.props.editStudent(student);
 
-    console.log("Student Editted - ", editStudent);
+    console.log("Student Edited - ", editStudent);
     console.log("Content of the prop", this.props);
 
     // Update state, and trigger redirect to show the edited student
@@ -70,7 +70,7 @@ class EditStudentContainer extends Component {
       imageUrl: "",
       gpa: null,
       redirect: true, 
-      redirectId: editStudent.id
+      redirectId: this.props.student.id
     });
   }
 
