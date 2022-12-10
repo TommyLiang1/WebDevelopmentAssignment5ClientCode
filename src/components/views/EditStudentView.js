@@ -7,6 +7,7 @@ It constructs a React component to display the new student page.
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 
 // Create styling for the input form
 const useStyles = makeStyles( () => ({
@@ -37,6 +38,50 @@ const useStyles = makeStyles( () => ({
 const EditStudentView = (props) => {
   const {handleChange, handleSubmit, student} = props;
   const classes = useStyles();
+  const [CheckFirstName, setCheckFirstName] = useState("")
+  const [CheckLastName, setCheckLastName] = useState("")
+  const [CheckEmail, setCheckEmail] = useState("")
+  const [edit, setEdit] = useState("")
+  
+  function formValidation(e){
+    // prevent page from reloading
+    e.preventDefault();
+
+    // if all fields of the form are valid
+    if (e.target[1].value && e.target[2].value && e.target[3].value){
+      handleSubmit(e);
+    }
+
+    // checks if first name is valid
+    if (!e.target[1].value){
+      setCheckFirstName("There is no first name.");
+    }
+    else{ 
+      setCheckFirstName("");
+    }
+
+    //checks if last name is valid
+    if (!e.target[2].value){
+      setCheckLastName("There is no last name.");
+    }
+    else{
+      setCheckLastName("");
+    }
+    
+    //checks if email is valid
+    if (!e.target[3].value){
+      setCheckEmail("There is no email.");
+    }
+    else{
+      setCheckEmail("");
+    }
+
+  }
+  function formSubmission(e){
+    e.preventDefault();
+    formValidation(e);
+    setEdit("Successfully edited student information.")
+  }
 
   // Render a Edit Student view with an input form
   return (
@@ -50,7 +95,7 @@ const EditStudentView = (props) => {
               Edit a Student
             </Typography>
           </div>
-          <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
+          <form style={{textAlign: 'center'}} onSubmit={(e) => formSubmission(e)}>
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
             <input type="text" name="campusId" placeholder={student.campusId} onChange={(e) => handleChange(e)} />
             <br/>
@@ -88,6 +133,10 @@ const EditStudentView = (props) => {
             <br/>
           </form>
           </div>
+          {CheckFirstName}
+          {CheckLastName} 
+          {CheckEmail}
+          {edit}
       </div>
     </div>    
   )
