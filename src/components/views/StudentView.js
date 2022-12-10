@@ -6,9 +6,11 @@ It constructs a React component to display the single student view page.
 ================================================== */
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import { useState } from 'react';
 
 const StudentView = (props) => {
   const { student, deleteStudent } = props;
+  const [studentdeletemsg, setstudentdeletemsg] = useState("");
 
   let img;
   if(student.imageUrl == null || student.imageUrl === "") { img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" }
@@ -26,6 +28,12 @@ const StudentView = (props) => {
     );
   }
 
+  // function to set student delete message and delete student
+  const studentDelete=() =>{
+    deleteStudent(student.id);
+    setstudentdeletemsg("Deleted Student");
+  }
+
   // Render a single Student view 
   return (
     <div>
@@ -40,7 +48,8 @@ const StudentView = (props) => {
       <h2>GPA: {student.gpa? student.gpa : "N/A"}</h2>
       <br/>
       <Link to={`/students`}>
-        <button onClick={() => deleteStudent(student.id)}>Delete Student</button>
+        <button onClick={() => studentDelete(student.id)}>Delete Student</button>
+        <p>{studentdeletemsg}</p>
       </Link>
     </div>
   );
