@@ -41,7 +41,7 @@ const EditStudentView = (props) => {
   // Render a Edit Student view with an input form
   return (
     <div>
-      <h1>Edit Student</h1>
+      <h1>Edit Student {student.firstname} {student.lastname}</h1>
 
       <div className={classes.root}>
         <div className={classes.formContainer}>
@@ -52,32 +52,32 @@ const EditStudentView = (props) => {
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
+            <input type="text" name="campusId" placeholder={student.campusId} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} />
+            <input type="text" name="firstname" placeholder={student.firstname} onChange ={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
+            <input type="text" name="lastname" placeholder={student.lastname} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
-            <input type="text" name="email" onChange={(e) => handleChange(e)} />
+            <input type="text" name="email" placeholder={student.email} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>ImageURL: </label>
-            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
+            <input type="text" name="imageUrl" placeholder={student.imageUrl} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
-            <input type="text" name="gpa" onChange={(e) => handleChange(e)} />
+            <input type="text" name="gpa" placeholder={student.gpa} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
