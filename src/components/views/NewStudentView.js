@@ -87,7 +87,7 @@ const NewStudentView = (props) => {
             <br/>
             <br/>
           </form>
-          </div>
+        </div>
       </div>
     </div>    
   )
