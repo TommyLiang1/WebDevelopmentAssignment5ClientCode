@@ -5,7 +5,6 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
 // implemented useState to be used as real-time error handling
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // Take in props data to construct the component

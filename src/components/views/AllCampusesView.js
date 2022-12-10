@@ -6,10 +6,19 @@ It constructs a React component to display all campuses.
 ================================================== */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles( () => ({
+  button:{
+    marginLeft: "5px",
+    marginRight: "5px",
+  }
+}));
 
 const AllCampusesView = (props) => {
   // taken fron allstudentsview.js the const for props otherwise deletecampus would not be defined
   const {allCampuses, deleteCampus} = props;
+  const classes = useStyles();
   // If there is no campus, display a message.
   if (!allCampuses.length) {
     return (
@@ -35,7 +44,10 @@ const AllCampusesView = (props) => {
           <h4>campus id: {campus.id}</h4>
           <p>{campus.address}</p>
           <p>{campus.description}</p>
-          <button onClick={() => deleteCampus(campus.id)}>Delete</button>
+          <Link to={`/editcampus/${campus.id}`}>
+            <button className={classes.button}>Edit</button>
+          </Link>
+          <button className={classes.button} onClick={() => deleteCampus(campus.id)}>Delete</button>
           <hr/>
         </div>
       ))}

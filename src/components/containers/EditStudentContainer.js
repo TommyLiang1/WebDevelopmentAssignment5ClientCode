@@ -54,7 +54,7 @@ class EditStudentContainer extends Component {
       gpa: this.state.gpa == null ? this.props.student.gpa : this.state.gpa,
     };
 
-    // Add edit student in back-end database
+    // Edit student in back-end database
     let editStudent = await this.props.editStudent(student);
 
     console.log("Student Edited - ", editStudent);
@@ -100,12 +100,12 @@ class EditStudentContainer extends Component {
   }
 }
 
-
 const mapState = (state) => {
   return {
     student: state.student,  // Get the State object from Reducer "student"
   };
 };
+
 // The following input argument is passed to the "connect" function used by "EditStudentContainer" component to connect to Redux Store.
 // The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
 // The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
