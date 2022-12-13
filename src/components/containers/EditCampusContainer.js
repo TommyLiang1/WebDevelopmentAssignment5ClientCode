@@ -38,20 +38,17 @@ class EditCampusContainer extends Component {
   // Take action after user click the submit button
   handleSubmit = async event => {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
-    console.log("Checking this state", this.state)
-    console.log("Checking this props", this.props)
+
 
     let campus = {
-        name: this.state.campusname === "" ? this.props.campus.campusname : this.state.campusname,
-        address: this.state.campusaddress === "" ? this.props.campus.campusaddress : this.state.campusaddress,
-        description: this.state.campusdescription === "" ? this.props.campus.campusdescription : this.state.campusdescription,
+        id: this.props.campus.id,
+        name: this.state.campusname === "" ? this.props.campus.name : this.state.campusname,
+        address: this.state.campusaddress === "" ? this.props.campus.address : this.state.campusaddress,
+        description: this.state.campusdescription === "" ? this.props.campus.description : this.state.campusdescription,
         imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? this.props.campus.imageUrl : this.state.imageUrl
     };
-    
-    console.log("Checking campus:", campus)
     // Edit student in back-end database
-    let editCampus = await this.props.editCampus(campus);
-    console.log("Printing: ", editCampus)
+    await this.props.editCampus(campus);
     // Update state, and trigger redirect to show the new campus
     this.setState({
       campusname: "", 
