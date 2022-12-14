@@ -47,6 +47,7 @@ const CampusView = (props) => {
       console.log(student)
       student.campusId = 1;
       editStudent(student)
+      window.location.reload(true)
     })
   }
 
