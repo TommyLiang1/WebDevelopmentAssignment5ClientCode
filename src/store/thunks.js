@@ -96,6 +96,7 @@ export const fetchStudentThunk = id => async dispatch => {  // The THUNK
     // Call Action Creator to return Action object (type + payload with student data)
     // Then dispatch the Action object to Reducer to display student data 
     dispatch(ac.fetchStudent(res.data));
+    return res
   } catch(err) {
     console.error(err);
   }

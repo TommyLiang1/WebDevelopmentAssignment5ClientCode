@@ -15,7 +15,7 @@ const StudentView = (props) => {
   let img;
   if(student.imageUrl == null || student.imageUrl === "") { img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" }
   else { img = student.imageUrl }
-
+  console.log(student, student.email)
   if(student.campusId == null) {
     return (
     <div>

@@ -41,7 +41,7 @@ const EditStudentView = (props) => {
   const [CheckFirstName, setCheckFirstName] = useState("")
   const [CheckLastName, setCheckLastName] = useState("")
   const [CheckEmail, setCheckEmail] = useState("")
-  const [edit, setEdit] = useState("")
+  // const [edit, setEdit] = useState("")
   
   function formValidation(e){
     // prevent page from reloading
@@ -54,7 +54,7 @@ const EditStudentView = (props) => {
 
     // checks if first name is valid
     if (!e.target[1].value){
-      setCheckFirstName("There is no first name.");
+      setCheckFirstName("There is no first name. ");
     }
     else{ 
       setCheckFirstName("");
@@ -62,7 +62,7 @@ const EditStudentView = (props) => {
 
     //checks if last name is valid
     if (!e.target[2].value){
-      setCheckLastName("There is no last name.");
+      setCheckLastName("There is no last name. ");
     }
     else{
       setCheckLastName("");
@@ -70,7 +70,7 @@ const EditStudentView = (props) => {
     
     //checks if email is valid
     if (!e.target[3].value){
-      setCheckEmail("There is no email.");
+      setCheckEmail("There is no email. ");
     }
     else{
       setCheckEmail("");
@@ -80,7 +80,7 @@ const EditStudentView = (props) => {
   function formSubmission(e){
     e.preventDefault();
     formValidation(e);
-    setEdit("Successfully edited student information.")
+    // setEdit("Successfully edited student information.")
   }
 
   // Render a Edit Student view with an input form
@@ -136,7 +136,7 @@ const EditStudentView = (props) => {
           {CheckFirstName}
           {CheckLastName} 
           {CheckEmail}
-          {edit}
+          {/* {edit} */}
       </div>
     </div>    
   )
