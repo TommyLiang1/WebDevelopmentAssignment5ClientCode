@@ -10,12 +10,14 @@ import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-  const { campus, deleteCampus, fetchStudent, addStudent, editStudent } = props;
+  const { campus, deleteCampus, fetchStudent, addStudent, editStudent, fetchAllStudents} = props;
   // temp variable to check student enrollment
   let temp;
   // to set user image
   let image;
-
+  const [showStudents, setShowStudents] = useState(false);
+  const [students, setStudents] = useState([]);
+  // let addingStudent = false;
   // if there is no campus or incorrect id
   if (campus === null) {
     return (
@@ -39,17 +41,33 @@ const CampusView = (props) => {
     image = campus.imageUrl;
   }
 
-  async function addStudent(id) {
+  async function showExistingStudents() {
+    let studentsCall = fetchAllStudents()
+    // console.log(this.state.students)
+    studentsCall.then(res => {
+      setShowStudents(true)
+      console.log(res)
+      setStudents(res)
+      // student = res.data;
+      // console.log(student)
+      // student.campusId = null; 
+      // addStudent(student)
+      // window.location.reload(true)
+    })
+  }
+  async function addExistingStudent(id) {
     let studentCall = fetchStudent(id)
     let student;
     studentCall.then(res => {
       student = res.data;
       console.log(student)
-      student.campusId = null; 
-      addStudent(student)
+      // console.log("window", campus.id )
+      student.campusId = campus.id ;
+      editStudent(student)
       window.location.reload(true)
     })
   }
+
 
   async function removeStudent(id) {
     let studentCall = fetchStudent(id)
@@ -78,15 +96,32 @@ const CampusView = (props) => {
             <Link to={`/student/${student.id}`}>
               <h2>{name}</h2>
             </Link>
-            <button onClick={() => addStudent(student.id)}>Add Student</button>
             <button onClick={() => removeStudent(student.id)}>Remove Student</button>
           </div>
         );
       })}
       <br />
+      <Link to={`/newstudent`}>
+        <button>Add New Student</button>
+      </Link>
+      <button onClick={() => showExistingStudents()}>Add Existing Student</button>
       <Link to={`/campuses`}>
         <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
       </Link>
+
+      {showStudents && (students.map((student) => {
+          let name = student.firstname + " " + student.lastname;
+          return (
+            <div key={student.id}>
+              <Link to={`/student/${student.id}`}>
+                <h2>{name}</h2>
+              </Link>
+              <button onClick={() => addExistingStudent(student.id)}>Add Student</button>
+              <hr/>
+            </div>
+          );
+        }
+      ))}
     </div>
   );
 };
