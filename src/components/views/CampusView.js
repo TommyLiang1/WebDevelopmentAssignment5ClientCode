@@ -43,8 +43,9 @@ const CampusView = (props) => {
     let studentCall = fetchStudent(id)
     let student;
     studentCall.then(res => {
-      student += res.data;
+      student = res.data;
       console.log(student)
+      student.campusId = null; 
       editStudent(student)
       window.location.reload(true)
     })
