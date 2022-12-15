@@ -1,9 +1,10 @@
 /*==================================================
-EditStudentView.js
+EditCampusView.js
 
 The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the new student page.
+It constructs a React component to display a single campus and its students (if any).
 ================================================== */
+// implemented useState to be used as real-time error handling
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,50 +35,40 @@ const useStyles = makeStyles( () => ({
   },
 }));
 
-const EditStudentView = (props) => {
-  const {handleChange, handleSubmit, student} = props;
+const EditCampusView = (props) => {
+  const {handleChange, handleSubmit, campus} = props;
   const classes = useStyles();
-  
-  // Render a Edit Student view with an input form
+
+  console.log(campus);
+  // Render a Edit Campus view with an input form
   return (
     <div>
-      <h1>Edit Student {student.firstname} {student.lastname}</h1>
-
+      <h1>Edit Campus {campus.name} </h1>
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
             <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
-              Edit a Student
+              Edit a Campus
             </Typography>
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" placeholder={student.campusId === 1 ? "" : student.campusId} onChange={(e) => handleChange(e)} />
+            <label style= {{color:'#11153e', fontWeight: 'bold'}}>Campus Name: </label>
+            <input type="text" name="campusname" placeholder={campus.name} onChange ={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+        
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Address: </label>
+            <input type="text" name="campusaddress" placeholder={campus.address} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
-            <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" placeholder={student.firstname} onChange ={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" placeholder={student.lastname} onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
-            <input type="text" name="email" placeholder={student.email} onChange={(e) => handleChange(e)} />
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Description: </label>
+            <input type="text" name="campusdescription" placeholder={campus.description} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>ImageURL: </label>
-            <input type="text" name="imageUrl" placeholder={student.imageUrl} onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
-            <input type="number" name="gpa" step=".01" min="0.00" max="4.00" onChange={(e) => handleChange(e)} />
+            <input type="text" name="imageUrl" placeholder={campus.imageUrl} onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
@@ -90,7 +81,7 @@ const EditStudentView = (props) => {
         </div>
       </div>
     </div>    
-  )
+  );
 }
 
-export default EditStudentView;
+export default EditCampusView;

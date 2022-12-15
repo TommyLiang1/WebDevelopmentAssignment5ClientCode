@@ -6,10 +6,19 @@ It constructs a React component to display all campuses.
 ================================================== */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles( () => ({
+  button:{
+    marginLeft: "5px",
+    marginRight: "5px",
+  }
+}));
 
 const AllCampusesView = (props) => {
   // taken fron allstudentsview.js the const for props otherwise deletecampus would not be defined
   const {allCampuses, deleteCampus} = props;
+  const classes = useStyles();
   // If there is no campus, display a message.
   if (!allCampuses.length) {
     return (
@@ -27,18 +36,26 @@ const AllCampusesView = (props) => {
     <div>
       <h1>All Campuses</h1>
 
-      {allCampuses.map((campus) => (
-        <div key={campus.id}>
-          <Link to={`/campus/${campus.id}`}>
-            <h2>{campus.name}</h2>
-          </Link>
-          <h4>campus id: {campus.id}</h4>
-          <p>{campus.address}</p>
-          <p>{campus.description}</p>
-          <button onClick={() => deleteCampus(campus.id)}>Delete</button>
-          <hr/>
-        </div>
-      ))}
+      {allCampuses.map((campus) => {
+        // this check removes null campus
+        if(campus.id !== 1)
+          return (
+            <div key={campus.id}>
+            <Link to={`/campus/${campus.id}`}>
+              <h2>{campus.name}</h2>
+            </Link>
+            <h4>campus id: {campus.id}</h4>
+            <img src={!campus.imageUrl ? "https://onuniverse-assets.imgix.net/00643229-A4BC-4907-B4E1-881B190EAF30.jpg?w=750" : campus.imageUrl} alt="" width={300}/>
+            <p>{campus.address}</p>
+            <Link to={`/editcampus/${campus.id}`}>
+              <button className={classes.button}>Edit</button>
+            </Link>
+            <button className={classes.button} onClick={() => deleteCampus(campus.id)}>Delete</button>
+            <hr/>
+          </div>
+          )
+        return (null);
+      })}
       <br/>
       <Link to={`/newcampus`}>
         <button>Add New Campus</button>

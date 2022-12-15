@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-  const { campus, deleteCampus, fetchStudent, addStudent, editStudent, fetchAllStudents} = props;
+  const { campus, deleteCampus, fetchStudent, editStudent, fetchAllStudents} = props;
   // temp variable to check student enrollment
   let temp;
   // to set user image
@@ -19,65 +19,52 @@ const CampusView = (props) => {
   const [students, setStudents] = useState([]);
   // let addingStudent = false;
   // if there is no campus or incorrect id
-  if (campus === null) {
+  if (campus === null || campus.id === 1)
     return (
-      <div>You entered an incorrect ID or this campus does not exist.</div>
+      <h1>This campus does not exist.</h1>
     )
-  }
 
   //checking student enrollment
-  if (campus.students.length === 0) {
-    temp = "No students are at this campus.";
-  }
-  else {
-    temp = "Students at this campus:";
-  }
+  if (campus.students.length === 0) temp = "No students are at this campus.";
+  else temp = "Students at this campus:";
 
   //checks if there is a campus img, if none then displays squidward community college
-  if (!campus.imageUrl) {
-    image = "https://onuniverse-assets.imgix.net/00643229-A4BC-4907-B4E1-881B190EAF30.jpg?w=750"
-  }
-  else {
-    image = campus.imageUrl;
-  }
+  if (!campus.imageUrl) image = "https://onuniverse-assets.imgix.net/00643229-A4BC-4907-B4E1-881B190EAF30.jpg?w=750"
+  else image = campus.imageUrl; 
 
   async function showExistingStudents() {
-    let studentsCall = fetchAllStudents()
-    // console.log(this.state.students)
+    setStudents([]);
+    setShowStudents(true);
+    let studentsCall = fetchAllStudents();
     studentsCall.then(res => {
-      setShowStudents(true)
-      console.log(res)
-      setStudents(res)
-      // student = res.data;
-      // console.log(student)
-      // student.campusId = null; 
-      // addStudent(student)
-      // window.location.reload(true)
+      res.forEach(student => {
+        if(student.campusId !== campus.id)
+          setStudents(prevStudents => [...prevStudents, student]);
+      })
     })
   }
+
   async function addExistingStudent(id) {
     let studentCall = fetchStudent(id)
     let student;
     studentCall.then(res => {
       student = res.data;
-      console.log(student)
-      // console.log("window", campus.id )
-      student.campusId = campus.id ;
-      editStudent(student)
-      window.location.reload(true)
+      //console.log(student);
+      student.campusId = campus.id;
+      editStudent(student);
+      window.location.reload(true);
     })
   }
-
 
   async function removeStudent(id) {
     let studentCall = fetchStudent(id)
     let student;
     studentCall.then(res => {
       student = res.data;
-      console.log(student)
+      //console.log(student);
       student.campusId = 1;
-      editStudent(student)
-      window.location.reload(true)
+      editStudent(student);
+      window.location.reload(true);
     })
   }
 
@@ -89,17 +76,19 @@ const CampusView = (props) => {
       <p>{campus.address}</p>
       <p>{campus.description}</p>
       <div>{temp}</div>
-      {campus.students.map(student => {
-        let name = student.firstname + " " + student.lastname;
-        return (
-          <div key={student.id}>
-            <Link to={`/student/${student.id}`}>
-              <h2>{name}</h2>
-            </Link>
-            <button onClick={() => removeStudent(student.id)}>Remove Student</button>
-          </div>
-        );
-      })}
+      {
+        campus.students.map(student => {
+          return (
+            <div key={student.id}>
+              <Link to={`/student/${student.id}`}>
+                <h2>{student.firstname} {student.lastname}</h2>
+              </Link>
+              <button onClick={() => removeStudent(student.id)}>Remove Student</button>
+              <hr/>
+            </div>
+          );
+        })
+      }
       <br />
       <Link to={`/newstudent`}>
         <button>Add New Student</button>
@@ -109,19 +98,23 @@ const CampusView = (props) => {
         <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
       </Link>
 
-      {showStudents && (students.map((student) => {
-          let name = student.firstname + " " + student.lastname;
-          return (
-            <div key={student.id}>
-              <Link to={`/student/${student.id}`}>
-                <h2>{name}</h2>
-              </Link>
-              <button onClick={() => addExistingStudent(student.id)}>Add Student</button>
-              <hr/>
-            </div>
-          );
+      <div hidden={!showStudents}>
+        {
+          students.length === 0 ? <h1>No students to add</h1> :
+          students.map((student) => {
+            let name = student.firstname + " " + student.lastname;
+            return (
+              <div key={student.id}>
+                <Link to={`/student/${student.id}`}>
+                  <h2>{name}</h2>
+                </Link>
+                <button onClick={() => addExistingStudent(student.id)}>Add Student</button>
+                <hr/>
+              </div>
+            );
+          })
         }
-      ))}
+      </div>
     </div>
   );
 };

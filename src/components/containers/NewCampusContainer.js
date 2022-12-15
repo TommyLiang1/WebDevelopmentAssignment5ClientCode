@@ -34,8 +34,8 @@ class NewCampusContainer extends Component {
   // Take action after user click the submit button
   handleSubmit = async event => {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
-    console.log("Checking this state", this.state)
-    console.log("Checking this props", this.props)
+    //console.log("Checking this state", this.state)
+    //console.log("Checking this props", this.props)
 
     let campus = {
         name: this.state.campusname,
@@ -44,7 +44,7 @@ class NewCampusContainer extends Component {
         imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? "" : this.state.imageUrl
     };
     
-    console.log("Checking campus:", campus)
+    //console.log("Checking campus:", campus)
     // Add new student in back-end database
     let newCampus = await this.props.addCampus(campus);
     console.log("Printing: ", newCampus)
@@ -77,7 +77,7 @@ class NewCampusContainer extends Component {
         <Header />
         <NewCampusView
           handleChange = {this.handleChange} 
-          handleSubmit={this.handleSubmit}      
+          handleSubmit = {this.handleSubmit}      
         />
       </div>          
     );
