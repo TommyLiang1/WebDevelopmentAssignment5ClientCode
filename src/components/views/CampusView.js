@@ -39,6 +39,17 @@ const CampusView = (props) => {
     image = campus.imageUrl;
   }
 
+  async function addStudent(id) {
+    let studentCall = fetchStudent(id)
+    let student;
+    studentCall.then(res => {
+      student += res.data;
+      console.log(student)
+      editStudent(student)
+      window.location.reload(true)
+    })
+  }
+
   async function removeStudent(id) {
     let studentCall = fetchStudent(id)
     let student;
@@ -66,6 +77,7 @@ const CampusView = (props) => {
             <Link to={`/student/${student.id}`}>
               <h2>{name}</h2>
             </Link>
+            <button onClick={() => addStudent(student.id)}>Add Student</button>
             <button onClick={() => removeStudent(student.id)}>Remove Student</button>
           </div>
         );
