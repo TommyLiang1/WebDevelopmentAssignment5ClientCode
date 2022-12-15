@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-  const { campus, deleteCampus, fetchStudent, editStudent } = props;
+  const { campus, deleteCampus, fetchStudent, addStudent, editStudent } = props;
   // temp variable to check student enrollment
   let temp;
   // to set user image
@@ -46,7 +46,7 @@ const CampusView = (props) => {
       student = res.data;
       console.log(student)
       student.campusId = null; 
-      editStudent(student)
+      addStudent(student)
       window.location.reload(true)
     })
   }

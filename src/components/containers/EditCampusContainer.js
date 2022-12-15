@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 
 import EditCampusView from '../views/EditCampusView';
 import { editCampusThunk, fetchCampusThunk } from '../../store/thunks';
+import { addStudentThunk } from "../../store/thunks";
 
 class EditCampusContainer extends Component {
   // Initialize state
@@ -99,6 +100,7 @@ const mapDispatch = (dispatch) => {
     return({
         editCampus: (campus) => dispatch(editCampusThunk(campus)),
         fetchCampus: (campusId) => dispatch(fetchCampusThunk(campusId)),
+        addStudent: (student) => dispatch(addStudentThunk(student)),
     })
 }
 
