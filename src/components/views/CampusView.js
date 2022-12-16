@@ -7,9 +7,27 @@ It constructs a React component to display a single campus and its students (if 
 // implemented useState to be used as real-time error handling
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { makeStyles, withTheme } from '@material-ui/core/styles';
 
+const useStyles = makeStyles( () => ({
+  button:{
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
+  existingStudentsContainer:{
+    backgroundColor:"#f7f7e6",
+    width: "90%",
+    border:"solid 2px black",
+    alignSelf:"center",
+    margin: "auto",
+    borderRadius: "20px",
+    paddingBottom:"20px",
+    marginBottom:"20px"
+  }
+}));
 // Take in props data to construct the component
 const CampusView = (props) => {
+  const classes = useStyles();
   const { campus, deleteCampus, fetchStudent, editStudent, fetchAllStudents} = props;
   // temp variable to check student enrollment
   let temp;
@@ -43,7 +61,7 @@ const CampusView = (props) => {
       })
     })
   }
-
+  
   async function addExistingStudent(id) {
     let studentCall = fetchStudent(id)
     let student;
@@ -90,31 +108,32 @@ const CampusView = (props) => {
         })
       }
       <br />
-      <Link to={`/newstudent`}>
-        <button>Add New Student</button>
-      </Link>
-      <button onClick={() => showExistingStudents()}>Add Existing Student</button>
-      <Link to={`/campuses`}>
-        <button onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
-      </Link>
-
-      <div hidden={!showStudents}>
+      <div hidden={!showStudents} className={classes.existingStudentsContainer}>
+        <h4>Choose a student to add:</h4>
         {
           students.length === 0 ? <h1>No students to add</h1> :
           students.map((student) => {
             let name = student.firstname + " " + student.lastname;
             return (
               <div key={student.id}>
+                 <hr/>
                 <Link to={`/student/${student.id}`}>
                   <h2>{name}</h2>
                 </Link>
                 <button onClick={() => addExistingStudent(student.id)}>Add Student</button>
-                <hr/>
               </div>
             );
           })
         }
       </div>
+      <Link to={`/newstudent`}>
+        <button>Add New Student</button>
+      </Link>
+      <button className={classes.button} onClick={() => showExistingStudents()}>Add Existing Student</button>
+      <Link to={`/campuses`}>
+        <button className={classes.button} onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
+      </Link>
+
     </div>
   );
 };

@@ -42,7 +42,8 @@ const NewStudentView = (props) => {
   return (
     <div>
       <h1>New Student</h1>
-
+      <p>note: Must enter a valid campus ID for student to be added</p>
+      <p> for students with no campus enter 1</p>
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>

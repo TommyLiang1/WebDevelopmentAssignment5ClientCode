@@ -42,7 +42,8 @@ const EditStudentView = (props) => {
   return (
     <div>
       <h1>Edit Student {student.firstname} {student.lastname}</h1>
-
+      <p>note: Must enter a valid campus ID for student to be edited</p>
+      <p> for students with no campus enter 1</p>
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
@@ -89,7 +90,7 @@ const EditStudentView = (props) => {
           </form>
         </div>
       </div>
-    </div>    
+    </div>
   )
 }
 
