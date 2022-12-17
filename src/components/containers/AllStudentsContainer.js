@@ -10,11 +10,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
-import { 
-  fetchAllStudentsThunk,
-  deleteStudentThunk,
-  editStudentThunk
-} from '../../store/thunks';
+import { fetchAllStudentsThunk, deleteStudentThunk, editStudentThunk } from '../../store/thunks';
 
 import AllStudentsView from '../views/AllStudentsView';
 

@@ -35,15 +35,21 @@ const useStyles = makeStyles( () => ({
 }));
 
 const NewStudentView = (props) => {
-  const {handleChange, handleSubmit } = props;
+  const {handleChange, handleSubmit, campusList } = props;
   const classes = useStyles();
 
   // Render a New Student view with an input form
   return (
     <div>
       <h1>New Student</h1>
-      <p>note: Must enter a valid campus ID for student to be added</p>
-      <p> for students with no campus enter 1</p>
+      <p>note: Must enter a valid campus ID for student to be added. (Campus ID can be left blank)</p>
+      <h4>Available Campus Ids</h4>
+      { 
+        campusList.map(id => {
+          return <span key={id}>{id} </span>
+        })
+      }
+      <br/><br/>
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>

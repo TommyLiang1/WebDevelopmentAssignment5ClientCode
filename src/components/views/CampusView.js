@@ -7,7 +7,7 @@ It constructs a React component to display a single campus and its students (if 
 // implemented useState to be used as real-time error handling
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { makeStyles, withTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles( () => ({
   button:{
@@ -56,7 +56,7 @@ const CampusView = (props) => {
     let studentsCall = fetchAllStudents();
     studentsCall.then(res => {
       res.forEach(student => {
-        if(student.campusId !== campus.id)
+        if(student.campusId !== campus.id && student.campusId === 1)
           setStudents(prevStudents => [...prevStudents, student]);
       })
     })
@@ -126,8 +126,8 @@ const CampusView = (props) => {
           })
         }
       </div>
-      <Link to={`/newstudent`}>
-        <button>Add New Student</button>
+      <Link to={`/newstudent/${campus.id}`}>
+        <button className={classes.button}>Add New Student</button>
       </Link>
       <button className={classes.button} onClick={() => showExistingStudents()}>Add Existing Student</button>
       <Link to={`/campuses`}>

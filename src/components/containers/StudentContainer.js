@@ -12,6 +12,7 @@ import { deleteStudentThunk, fetchStudentThunk } from "../../store/thunks";
 import { StudentView } from "../views";
 
 class StudentContainer extends Component {
+  
   // Get student data from back-end database
   componentDidMount() {
     //getting student ID from url
@@ -37,6 +38,7 @@ class StudentContainer extends Component {
 const mapState = (state) => {
   return {
     student: state.student,  // Get the State object from Reducer "student"
+    allCampuses: state.allCampuses,
   };
 };
 // 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
