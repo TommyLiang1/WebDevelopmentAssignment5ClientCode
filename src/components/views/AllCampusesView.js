@@ -17,7 +17,7 @@ const useStyles = makeStyles( () => ({
 
 const AllCampusesView = (props) => {
   // taken fron allstudentsview.js the const for props otherwise deletecampus would not be defined
-  const {allCampuses, deleteCampus} = props;
+  const {allCampuses, deleteCampus, fetchStudent, editStudent, fetchAllStudents} = props;
   const classes = useStyles();
   // If there is no campus, display a message.
   if (!allCampuses.length) {
@@ -29,6 +29,29 @@ const AllCampusesView = (props) => {
         </Link>
       </div>
     );
+  }
+
+  async function removeStudent(id) {
+    let studentCall = fetchStudent(id)
+    let student;
+    studentCall.then(res => {
+      student = res.data;
+      student.campusId = 1;
+      editStudent(student);
+      window.location.reload(true);
+    })
+  }
+
+  async function removeCampus(id) {
+    let studentList = fetchAllStudents();
+    studentList.then(res => {
+      res.forEach(student => {
+        if(student.campusId === id) {
+          removeStudent(student.id);
+        }
+      })
+    })
+    deleteCampus(id);
   }
 
   // If there is at least one campus, render All Campuses view 
@@ -50,7 +73,7 @@ const AllCampusesView = (props) => {
             <Link to={`/editcampus/${campus.id}`}>
               <button className={classes.button}>Edit</button>
             </Link>
-            <button className={classes.button} onClick={() => deleteCampus(campus.id)}>Delete</button>
+            <button className={classes.button} onClick={() => removeCampus(campus.id)}>Delete</button>
             <hr/>
           </div>
           )

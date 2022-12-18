@@ -67,7 +67,6 @@ const CampusView = (props) => {
     let student;
     studentCall.then(res => {
       student = res.data;
-      //console.log(student);
       student.campusId = campus.id;
       editStudent(student);
       window.location.reload(true);
@@ -79,11 +78,22 @@ const CampusView = (props) => {
     let student;
     studentCall.then(res => {
       student = res.data;
-      //console.log(student);
       student.campusId = 1;
       editStudent(student);
       window.location.reload(true);
     })
+  }
+
+  async function removeCampus(id) {
+    let studentList = fetchAllStudents();
+    studentList.then(res => {
+      res.forEach(student => {
+        if(student.campusId === id) {
+          removeStudent(student.id);
+        }
+      })
+    })
+    deleteCampus(id);
   }
 
   // Render a single Campus view with list of its students (temp will check for students)
@@ -131,7 +141,7 @@ const CampusView = (props) => {
       </Link>
       <button className={classes.button} onClick={() => showExistingStudents()}>Add Existing Student</button>
       <Link to={`/campuses`}>
-        <button className={classes.button} onClick={() => deleteCampus(campus.id)}>Delete Campus</button>
+        <button className={classes.button} onClick={() => removeCampus(campus.id)}>Delete Campus</button>
       </Link>
 
     </div>

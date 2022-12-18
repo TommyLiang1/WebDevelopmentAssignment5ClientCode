@@ -40,7 +40,6 @@ class EditStudentContainer extends Component {
           this.state.campuses.push(campus.id)
       })
     this.state.campuses.sort()
-    console.log(this.state.campuses)
   }
 
   // Capture input data when it is entered

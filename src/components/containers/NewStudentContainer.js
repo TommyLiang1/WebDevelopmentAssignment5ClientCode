@@ -98,7 +98,7 @@ class NewStudentContainer extends Component {
       <div>
         <Header />
         <NewStudentView 
-          handleChange = {this.handleChange} 
+          handleChange={this.handleChange} 
           handleSubmit={this.handleSubmit}
           campusList={this.state.campuses}     
         />
