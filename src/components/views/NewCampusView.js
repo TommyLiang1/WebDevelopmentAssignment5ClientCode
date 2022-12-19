@@ -1,8 +1,5 @@
 /*==================================================
-NewStudentView.js
-
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display the new student page.
+NewCampusView.js - taken from newstudentview.js
 ================================================== */
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -34,57 +31,40 @@ const useStyles = makeStyles( () => ({
   },
 }));
 
-const NewStudentView = (props) => {
-  const {handleChange, handleSubmit, campusList } = props;
+const NewCampusView = (props) => {
+
+  const {handleChange, handleSubmit} = props;
   const classes = useStyles();
 
   // Render a New Student view with an input form
   return (
     <div>
-      <h1>New Student</h1>
-      <p>note: Must enter a valid campus ID for student to be added. (Campus ID can be left blank)</p>
-      <h4>Available Campus Ids</h4>
-      { 
-        campusList.map(id => {
-          return <span key={id}>{id} </span>
-        })
-      }
-      <br/><br/>
+      <h1>New Campus</h1>
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
             <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
-              Add a Student
+              Add a Campus
             </Typography>
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="number" name="campusId" onChange={(e) => handleChange(e)} />
+            <label style= {{color:'#11153e', fontWeight: 'bold'}}>Campus Name: </label>
+            <input type="text" name="campusname" onChange ={(e) => handleChange(e)} required />
+            <br/>
+            <br/>
+        
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Address: </label>
+            <input type="text" name="campusaddress" onChange={(e) => handleChange(e)} required />
             <br/>
             <br/>
 
-            <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} required />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} required />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
-            <input type="email" name="email" onChange={(e) => handleChange(e)} required />
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Description: </label>
+            <input type="text" name="campusdescription" onChange={(e) => handleChange(e)} required/>
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>ImageURL: </label>
-            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
-            <br/>
-            <br/>
-
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
-            <input type="number" name="gpa" step=".01" min="0.00" max="4.00" onChange={(e) => handleChange(e)} />
+            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)}/>
             <br/>
             <br/>
 
@@ -100,4 +80,4 @@ const NewStudentView = (props) => {
   )
 }
 
-export default NewStudentView;
+export default NewCampusView;

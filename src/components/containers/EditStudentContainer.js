@@ -1,5 +1,5 @@
 /*==================================================
-NewStudentContainer.js
+EditStudentContainer.js
 
 The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
@@ -9,28 +9,30 @@ import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { fetchStudentThunk, editStudentThunk, fetchAllCampusesThunk } from "../../store/thunks";
 
-import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk, fetchAllCampusesThunk } from '../../store/thunks';
+import EditStudentView from '../views/EditStudentView';
 
-class NewStudentContainer extends Component {
-  // Initialize state
+class EditStudentContainer extends Component {
+  //Initialize state
   constructor(props){
     super(props);
     this.state = {
+      id: null,
       firstname: "", 
       lastname: "", 
       campusId: null,
       email: "",
       imageUrl: "",
       gpa: null,
-      redirect: false, 
+      redirect: false,
       redirectId: null,
       campuses: []
     };
   }
 
   componentDidMount() {
+    this.props.fetchStudent(this.props.match.params.id)
     this.props.fetchAllCampuses()
     this.props.allCampuses
       .forEach(campus => {
@@ -50,26 +52,28 @@ class NewStudentContainer extends Component {
   // Take action after user click the submit button
   handleSubmit = async event => {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
-
     let tmpId = this.state.campusId
     if(!this.state.campuses.includes(Number(tmpId)) || tmpId == null)
       tmpId = 1;
+    if(tmpId === 1 && this.props.student.campusId != null)
+      tmpId = this.props.student.campusId;
 
-    console.log(tmpId)
     let student = {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        campusId: tmpId,
-        email: this.state.email,
-        imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? "" : this.state.imageUrl,
-        gpa: this.state.gpa
+      id: this.props.student.id,
+      firstname: this.state.firstname === "" ? this.props.student.firstname : this.state.firstname,
+      lastname: this.state.lastname === "" ? this.props.student.lastname : this.state.lastname,
+      campusId: tmpId,
+      email: this.state.email === "" ? this.props.student.email : this.state.email,
+      imageUrl: this.state.imageUrl.match(/\.(jpeg|jpg|gif|png)$/) == null ? this.props.student.imageUrl : this.state.imageUrl,
+      gpa: this.state.gpa == null ? this.props.student.gpa : this.state.gpa,
     };
-    
-    // Add new student in back-end database
-    let newStudent = await this.props.addStudent(student);
 
-    // Update state, and trigger redirect to show the new student
+    // Edit student in back-end database
+    await this.props.editStudent(student);
+
+    // Update state, and trigger redirect to show the edited student
     this.setState({
+      id: null,
       firstname: "", 
       lastname: "", 
       campusId: null,
@@ -77,7 +81,7 @@ class NewStudentContainer extends Component {
       imageUrl: "",
       gpa: null,
       redirect: true, 
-      redirectId: newStudent.id
+      redirectId: this.props.student.id
     });
   }
 
@@ -97,10 +101,11 @@ class NewStudentContainer extends Component {
     return (
       <div>
         <Header />
-        <NewStudentView 
+        <EditStudentView 
           handleChange={this.handleChange} 
           handleSubmit={this.handleSubmit}
-          campusList={this.state.campuses}     
+          student={this.props.student}
+          campusList={this.state.campuses}
         />
       </div>          
     );
@@ -109,21 +114,23 @@ class NewStudentContainer extends Component {
 
 const mapState = (state) => {
   return {
-    allCampuses: state.allCampuses,
+    student: state.student,  // Get the State object from Reducer "student"
+    allCampuses: state.allCampuses,  // Get the State object from Reducer "student"
   };
 };
 
-// The following input argument is passed to the "connect" function used by "NewStudentContainer" component to connect to Redux Store.
+// The following input argument is passed to the "connect" function used by "EditStudentContainer" component to connect to Redux Store.
 // The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
 // The "mapDispatch" calls the specific Thunk to dispatch its action. The "dispatch" is a function of Redux Store.
 const mapDispatch = (dispatch) => {
     return({
-      addStudent: (student) => dispatch(addStudentThunk(student)),
-      fetchAllCampuses: () => dispatch(fetchAllCampusesThunk())
+        editStudent: (student) => dispatch(editStudentThunk(student)),
+        fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+        fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
     })
 }
 
 // Export store-connected container by default
-// NewStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
+// EditStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(NewStudentContainer);
+export default connect(mapState, mapDispatch)(EditStudentContainer);
